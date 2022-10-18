@@ -1,3 +1,1 @@
-Dependency commands
-
-pip install -U sentence-transformers
+This is the repo for our class project. The goal is to create a rememberence agent that can take in sound and output suggested documents
