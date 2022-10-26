@@ -18,7 +18,7 @@ for filePath in videoList:
 	print(videoFilePath)
 	harvard = sr.AudioFile(videoFilePath)
 	with harvard as source:
-		r.adjust_for_ambient_noise(source, duration=0.5)
+		r.adjust_for_ambient_noise(source, duration=1)
 		audio = r.record(source)
 
 	# result = r.recognize_google(audio, show_all=True)
