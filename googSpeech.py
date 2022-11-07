@@ -219,5 +219,5 @@ def main():
 
 if __name__ == "__main__":
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = \
-        "ubicomp-367400-b557ab12d1aa.json"
+        "ubicomp-367400-9ac3dff60117.json"
     main()
