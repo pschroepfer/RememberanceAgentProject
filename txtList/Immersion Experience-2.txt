@@ -1,0 +1,6 @@
+Immersion Experience
+Image latency and display refresh frequency
+the experience is more immersive with higher refresh rates
+higher refresh rates require a more powerful graphics processing unit
+Most displays have a refresh rate of 60Hz, which adds ~15ms of additional latency.
+The number is reduced to less than 7ms at 120Hz or 240Hz.

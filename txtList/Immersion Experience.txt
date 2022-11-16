@@ -1,0 +1,8 @@
+Immersion Experience
+Display resolution: 
+Minimal Angle of Resolution (MAR) refers to the minimum distance between two display pixels
+For the general public, resolution is about 30-65 arc-seconds
+Given the viewing distance of 1m regular viewers won’t be able to perceive two pixels as separate if they are less than 0.29 mm apart
+Relationship between display and field of view
+a regular person has stereopsis of 160 degrees x 135 degrees or 1/6 of the 360-degree FOV. Immersion is quantified with the immersive index by getting the ratio of display viewing area and 1/6 of the 360-degree FOV.
+

@@ -1,0 +1,5 @@
+The term machine learning was coined in 1959 by Arthur Samuel, an American IBMer and pioneer in the field of computer gaming and artificial intelligence.
+In 1957, Frank Rosenblatt created the perceptron based on Arthur Samuel’s work and a model of brain cells
+In the 1970s backpropagation was developed to update a network
+By 1980, expert systems had come to dominate AI, and statistics was out of favor
+Success for Geoffrey Hinton came in the mid-1980s with the reinvention of backpropagation

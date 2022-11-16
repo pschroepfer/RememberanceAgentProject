@@ -1,0 +1,7 @@
+Qualifications
+No exact definition - many different technologies fall under “smart city” umbrella
+Deakin and Al Waer list four factors that contribute to the definition of a smart city:
+The application of a wide range of electronic and digital technologies to communities and cities.
+The use of Information and Communications Technologies (ICT) to transform life and working environments within the region.
+The embedding of such ICT in government systems.
+The territorialisation of practices that brings ICT and people together to enhance the innovation and knowledge that they offer.

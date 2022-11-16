@@ -1,0 +1,4 @@
+Smart grids - Energy grids with features like circuit breakers and distribution boards integrating with home control, renewable energy storage, etc.
+Real time data collection for safety, traffic, etc.
+Bicycle/scooter sharing systems
+Providing access to government services through the use of e-access cards or mobile devices

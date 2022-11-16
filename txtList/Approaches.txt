@@ -1,0 +1,11 @@
+Approaches
+Supervised learning: 
+The computer is presented with example inputs and their desired outputs
+ the goal is to learn a general rule that maps inputs to outputs.
+Unsupervised learning: 
+No labels are given to the learning algorithm, 
+Algorithm finds structure in its input. 
+Unsupervised learning can be a goal in itself (discovering hidden patterns in data) or a means towards an end (feature learning).
+Reinforcement learning: 
+A computer program interacts with a dynamic environment in which it must perform a certain goal (such as driving a vehicle or playing a game against an opponent). 
+As it navigates its problem space, the program is provided feedback that's analogous to rewards, which it tries to maximize.

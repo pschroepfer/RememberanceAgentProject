@@ -1,0 +1,5 @@
+Intelligence
+One viewpoint is that a smart-city uses information technology to improve the “intelligence” of the city
+Orchestration intelligence: Where cities establish institutions and community-based problem solving and collaborations
+Empowerment intelligence: Cities provide open platforms, experimental facilities and smart city infrastructure in order to cluster innovation in certain districts
+Instrumentation intelligence: Where city infrastructure is made smart through real-time data collection, with analysis and predictive modelling across city districts.

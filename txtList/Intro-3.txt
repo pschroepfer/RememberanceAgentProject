@@ -1,0 +1,8 @@
+Intro
+Definition: Machine Learning is the study of computer algorithms that can improve automatically through experience and by the use of data
+It is seen as a part of artificial intelligence
+Machine learning algorithms build a model based on sample data, known as training data, in order to make predictions
+Machine learning algorithms are used in a wide variety of applications, such as in medicine, email filtering, speech recognition, and computer vision
+Useful when it is difficult or unfeasible to develop conventional algorithms to perform the needed tasks
+
+

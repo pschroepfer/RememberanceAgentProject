@@ -1,0 +1,11 @@
+Relation to other fields
+Data mining: 
+machine learning focuses on prediction, based on known properties learned from the training data
+while data mining focuses on the discovery of (previously) unknown properties in the data 
+Optimization: 
+Machine learning also has intimate ties to optimization: 
+many learning problems are formulated as minimization of some loss function on a training set of examples.
+Generalization: 
+The difference between optimization and machine learning arises from the goal of generalization: while optimization algorithms can minimize the loss on a training set, machine learning is concerned with minimizing the loss on unseen samples.
+Statistics
+statistics draws population inferences from a sample, while machine learning finds generalizable predictive patterns
