@@ -1,4 +1,4 @@
-Examples
+Examples 
 Singapore - Contactless payment technologies, 7.5 million+ people using public transport, and currently developing a vehicle-free eco-smart city
 Helsinki - Transitioning entire city bus fleet to electric, and reducing emissions by implementing energy-efficiency measures
 Zurich - Smart streetlights that dim or brighten according to traffic, and sensors that collect data about traffic, the environment, and more.
