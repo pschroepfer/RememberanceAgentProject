@@ -30,7 +30,7 @@ BoxLayout:
         orientation: 'vertical'
         Button:
             text: 'Click to Listen'
-            on_press: app.consommables.extend(range(10))
+            on_press: app.buildEmbeddings()
         Button:
             text: 'Selection A'
             on_press: app.consommables.extend(range(100))
@@ -58,83 +58,6 @@ class ProdConApp(App):
     def build(self):
         Clock.schedule_interval(self.consume, 0)
         return Builder.load_string(kv)
-
-    def listen_print_loop(self, responses, embedder, document_embeddings, sentences):
-        """Iterates through server responses and prints them.
-
-        The responses passed is a generator that will block until a response
-        is provided by the server.
-
-        Each response may contain multiple results, and each result may contain
-        multiple alternatives; for details, see https://goo.gl/tjCPAU.  Here we
-        print only the transcription for the top alternative of the top result.
-
-        In this case, responses are provided for interim results as well. If the
-        response is an interim one, print a line feed at the end of it, to allow
-        the next result to overwrite it, until the response is a final one. For the
-        final one, print a newline to preserve the finalized transcription.
-        """
-        print("in listen print")
-        num_chars_printed = 0
-        for response in responses:
-            if not response.results:
-                continue
-
-            # The `results` list is consecutive. For streaming, we only care about
-            # the first result being considered, since once it's `is_final`, it
-            # moves on to considering the next utterance.
-            result = response.results[0]
-            if not result.alternatives:
-                continue
-
-            # Display the transcription of the top alternative.
-            transcript = result.alternatives[0].transcript
-            # print(transcript[:-10])
-            # all_chars = ""
-            # for word in transcript:
-            #     all_chars += word
-            # print(len(all_chars))
-
-            # Display interim results, but with a carriage return at the end of the
-            # line, so subsequent lines will overwrite them.
-            #
-            # If the previous result was longer than this one, we need to print
-            # some extra spaces to overwrite the previous result
-
-            overwrite_chars = " " * (num_chars_printed - len(transcript))
-
-            if not result.is_final:
-                # sys.stdout.write(transcript + overwrite_chars + "\r")
-                # sys.stdout.flush()
-
-                num_chars_printed = len(transcript)
-
-            else:
-                query_words = transcript + overwrite_chars
-                q_embedding = embedder.doc_encode(query_words)
-
-                label = Factory.MyLabel(
-                    text='%s : %s' % ("Google Heard", query_words))
-                self.root.ids.target.add_widget(label)
-                break
-
-                # print(query_words)
-                # # print(q_embedding)
-                # print(len(q_embedding))
-                #
-                # cosine_scores = util.cos_sim(q_embedding, document_embeddings)
-                # print(cosine_scores[0])
-                #
-                # sentence_indice = np.argmax(np.asarray(cosine_scores[0]))
-                # print(sentences[sentence_indice])
-
-                # Exit recognition if any of the transcribed phrases could be
-                # one of our keywords.
-
-
-                if re.search(r"\b(exit|quit)\b", transcript, re.I):
-                    print("Exiting..")
-                    break
 
     def buildEmbeddings(self):
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = \
@@ -176,15 +99,16 @@ class ProdConApp(App):
                 speech.StreamingRecognizeRequest(audio_content=content)
                 for content in audio_generator
             )
-
             responses = client.streaming_recognize(streaming_config, requests)
-            label = Factory.MyLabel(
-                text='%s : %s' % ("Google Heard", responses[0]))
-            self.root.ids.target.add_widget(label)
+            # label = Factory.MyLabel(
+            #     text='%s : %s' % ("Google Heard", responses[0]))
+            # self.root.ids.target.add_widget(label)
             # print(responses)
             # Now, put the transcription responses to use.
 
-            # listen_print_loop(responses, embedder, document_embeddings, sentences) ###UNCOMMENT FOR IMPLEMENT
+            listen_print_loop(responses, embedder, document_embeddings, sentences) ###UNCOMMENT FOR IMPLEMENT
+            stream.__exit__(None, None, None)
+
 
     def consume(self, *args):
         while self.consommables and time() < (Clock.get_time() + MAX_TIME):

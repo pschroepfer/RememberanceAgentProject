@@ -102,7 +102,7 @@ def listen_print_loop(responses, embedder, document_embeddings, sentences):
     """
     print("in listen print")
     num_chars_printed = 0
-    for response in responses:
+    for index, response in enumerate(responses):
         if not response.results:
             continue
 
@@ -143,6 +143,7 @@ def listen_print_loop(responses, embedder, document_embeddings, sentences):
         else:
             query_words = transcript + overwrite_chars
             q_embedding = embedder.doc_encode(query_words)
+            print(index)
             print(query_words)
             # print(q_embedding)
             print(len(q_embedding))
@@ -164,6 +165,7 @@ def listen_print_loop(responses, embedder, document_embeddings, sentences):
 
             num_chars_printed = 0
 
+    print("here")
 
 def main():
     # See http://g.co/cloud/speech/docs/languages
