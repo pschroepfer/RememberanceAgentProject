@@ -1,10 +1,9 @@
 from kivy.app import App
-from kivy.clock import Clock, _default_time as time  # ok, no better way to use the same clock as kivy, hmm
 from kivy.lang import Builder
 from kivy.factory import Factory
 from kivy.properties import ListProperty
 
-from googSpeech import MicrophoneStream, listen_print_loop
+from googSpeech import MicrophoneStream #, listen_print_loop
 from ProjectSentenceTransformer import *
 from sentence_transformers import util
 import numpy as np
@@ -23,9 +22,11 @@ MAX_TIME = 1/60.
 RATE = 16000
 CHUNK = int(RATE / 10)  # 100ms
 
+TOP_K = 3
+
+
 kv = '''
 BoxLayout:
-    
     BoxLayout:
         orientation: 'vertical'
         Button:
@@ -33,10 +34,10 @@ BoxLayout:
             on_press: app.buildEmbeddings()
         Button:
             text: 'Selection A'
-            on_press: app.consommables.extend(range(100))
+            on_press: app.showFirstSelection()
         Button:
             text: 'Selection B'
-            on_press: app.consommables.extend(range(1000))
+            on_press: app.showFirstSelection()
         Button:
             text: 'Selection C'
             on_press: target.clear_widgets()   
@@ -51,33 +52,128 @@ BoxLayout:
     height: self.texture_size[1]
 '''
 
+def listen_print_loop(top_results, responses, embedder, document_embeddings, sentences):
+    """Iterates through server responses and prints them.
 
-class ProdConApp(App):
-    consommables = ListProperty([])
+    The responses passed is a generator that will block until a response
+    is provided by the server.
+
+    Each response may contain multiple results, and each result may contain
+    multiple alternatives; for details, see https://goo.gl/tjCPAU.  Here we
+    print only the transcription for the top alternative of the top result.
+
+    In this case, responses are provided for interim results as well. If the
+    response is an interim one, print a line feed at the end of it, to allow
+    the next result to overwrite it, until the response is a final one. For the
+    final one, print a newline to preserve the finalized transcription.
+    """
+    print("in listen print")
+    num_chars_printed = 0
+    for index, response in enumerate(responses):
+        if not response.results:
+            continue
+
+        # The `results` list is consecutive. For streaming, we only care about
+        # the first result being considered, since once it's `is_final`, it
+        # moves on to considering the next utterance.
+        result = response.results[0]
+        if not result.alternatives:
+            continue
+
+        # Display the transcription of the top alternative.
+        transcript = result.alternatives[0].transcript
+        # print(transcript[:-10])
+        # all_chars = ""
+        # for word in transcript:
+        #     all_chars += word
+        # print(len(all_chars))
+
+
+
+
+        # Display interim results, but with a carriage return at the end of the
+        # line, so subsequent lines will overwrite them.
+        #
+        # If the previous result was longer than this one, we need to print
+        # some extra spaces to overwrite the previous result
+        
+        
+        
+        overwrite_chars = " " * (num_chars_printed - len(transcript))
+
+        if not result.is_final:
+            # sys.stdout.write(transcript + overwrite_chars + "\r")
+            # sys.stdout.flush()
+
+            num_chars_printed = len(transcript)
+
+        else:
+            query_words = transcript + overwrite_chars
+            q_embedding = embedder.doc_encode(query_words)
+            print(index)
+            print(query_words)
+            # print(q_embedding)
+
+
+
+
+            cosine_scores = util.cos_sim(q_embedding, document_embeddings)
+            print(cosine_scores[0])
+
+
+            sentence_indices = np.argpartition(np.asarray(cosine_scores[0]), -TOP_K)[-TOP_K:].astype(int)
+            # indices in reverse order i.e. increasing similarity scores
+            print(sentence_indices.astype(int))
+
+            
+
+            for sentence_index in sentence_indices:
+                top_results.append(sentences[sentence_index])
+                print(sentences[sentence_index])
+
+            # Exit recognition if any of the transcribed phrases could be
+            # one of our keywords.
+            break
+            if re.search(r"\b(exit|quit)\b", transcript, re.I):
+                print("Exiting..")
+                break
+
+            num_chars_printed = 0
+
+class RemembranceAgent(App):
+
+
+
+    print("loading embedder")
+    embedder = ProjectTransformer('all-mpnet-base-v2')
+    print("embedder loaded")
+    top_results = ListProperty()
+
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = \
+        "ubicomp-367400-9ac3dff60117.json"
+    language_code = "en-US"  # a BCP-47 language tag
+    client = speech.SpeechClient()
+    config = speech.RecognitionConfig(
+        encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
+        sample_rate_hertz=RATE,
+        language_code=language_code,
+    )
+    streaming_config = speech.StreamingRecognitionConfig(
+        config=config, interim_results=True
+    )
+
 
     def build(self):
-        Clock.schedule_interval(self.consume, 0)
         return Builder.load_string(kv)
 
     def buildEmbeddings(self):
-        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = \
-            "ubicomp-367400-9ac3dff60117.json"
-        language_code = "en-US"  # a BCP-47 language tag
 
-        client = speech.SpeechClient()
-        config = speech.RecognitionConfig(
-            encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
-            sample_rate_hertz=RATE,
-            language_code=language_code,
-        )
 
-        streaming_config = speech.StreamingRecognitionConfig(
-            config=config, interim_results=True
-        )
 
-        print("loading embedder")
-        embedder = ProjectTransformer('all-mpnet-base-v2')
-        print("embedder loaded")
+
+
+
+
 
         sentences = [
             "hello my name is Gregory a bowed and in this first lesson we're going to talk about the history of interactive Computing but before we get into any of the details I want an outline for you a framework they were going to use to tell the difference or distinguish between the various generations of change over time the way this Frameworks going to go is that for each generation I'll point out what the relevant technology was and the trends that led to a an embodiment of what at that time was a computer then I'll step back and talk about The Visionaries whose ideas lead to that canonical technology and then we'll talk a little bit about the default or assumed or even some cases emergent interaction Style by which I mean the relationship between the humans and the Computing technology and in some ways this is indicated by a ratio between how many humans in Iraq act with how many examples are instances of the Computing technology and then I'll talk about initial applications that drove the adoption of this canonical technology and then we're going to see all the way to a supposed future of computational material we're going to do these one at a time",
@@ -91,7 +187,7 @@ class ProdConApp(App):
         ]
         document_embeddings = []
         for sentence in sentences:
-            document_embeddings.append(embedder.doc_encode(sentence))
+            document_embeddings.append(RemembranceAgent.embedder.doc_encode(sentence))
 
         with MicrophoneStream(RATE, CHUNK) as stream:
             audio_generator = stream.generator()
@@ -99,24 +195,32 @@ class ProdConApp(App):
                 speech.StreamingRecognizeRequest(audio_content=content)
                 for content in audio_generator
             )
-            responses = client.streaming_recognize(streaming_config, requests)
-            # label = Factory.MyLabel(
-            #     text='%s : %s' % ("Google Heard", responses[0]))
-            # self.root.ids.target.add_widget(label)
-            # print(responses)
-            # Now, put the transcription responses to use.
-
-            listen_print_loop(responses, embedder, document_embeddings, sentences) ###UNCOMMENT FOR IMPLEMENT
-            stream.__exit__(None, None, None)
+            responses = RemembranceAgent.client.streaming_recognize(RemembranceAgent.streaming_config, requests)
+            listen_print_loop(self.top_results, responses, RemembranceAgent.embedder, document_embeddings, sentences) ###UNCOMMENT FOR IMPLEMENT
 
 
-    def consume(self, *args):
-        while self.consommables and time() < (Clock.get_time() + MAX_TIME):
-            item = self.consommables.pop(0)  # i want the first one
-            label = Factory.MyLabel(
-                text='%s : %s : %s' % (item, Clock.get_time(), time()))
-            self.root.ids.target.add_widget(label)
+    def showFirstSelection(self):
+        print("TOP RESULTS")
+        print(self.top_results[2])
+        label = Factory.MyLabel(text='%s : %s' % (self.top_results[TOP_K - 1], "filler"))
+        self.root.ids.target.add_widget(label)
+
+    def showSecondSelection(self):
+        print("TOP RESULTS")
+        for result in self.top_results:
+            print(result)
+        
+        print(self.top_results[1])
+        label = Factory.MyLabel(text='%s : %s' % (self.top_results[TOP_K - 2], "filler"))
+        self.root.ids.target.add_widget(label)
+
+    def showThirdSelection(self):
+        print("TOP RESULTS")
+        print(self.top_results[0])
+        label = Factory.MyLabel(text='%s : %s' % (self.top_results[TOP_K - 3], "filler"))
+        self.root.ids.target.add_widget(label)
+
 
 
 if __name__ == '__main__':
-    ProdConApp().run()
+    RemembranceAgent().run()

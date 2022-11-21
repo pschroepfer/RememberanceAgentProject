@@ -146,7 +146,6 @@ def listen_print_loop(responses, embedder, document_embeddings, sentences):
             print(index)
             print(query_words)
             # print(q_embedding)
-            print(len(q_embedding))
 
 
 
@@ -159,6 +158,7 @@ def listen_print_loop(responses, embedder, document_embeddings, sentences):
 
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
+            break
             if re.search(r"\b(exit|quit)\b", transcript, re.I):
                 print("Exiting..")
                 break
