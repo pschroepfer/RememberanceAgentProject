@@ -58,7 +58,7 @@ BoxLayout:
     text_size: self.width, None
 '''
 
-def listen_print_loop(top_results, responses, embedder, document_embeddings, sentences):
+def listen_print_loop(top_results, responses, embedder, document_embeddings, sentences, query):
     """Iterates through server responses and prints them.
 
     The responses passed is a generator that will block until a response
@@ -94,17 +94,12 @@ def listen_print_loop(top_results, responses, embedder, document_embeddings, sen
         #     all_chars += word
         # print(len(all_chars))
 
-
-
-
         # Display interim results, but with a carriage return at the end of the
         # line, so subsequent lines will overwrite them.
         #
         # If the previous result was longer than this one, we need to print
         # some extra spaces to overwrite the previous result
-        
-        
-        
+
         overwrite_chars = " " * (num_chars_printed - len(transcript))
 
         if not result.is_final:
@@ -116,26 +111,21 @@ def listen_print_loop(top_results, responses, embedder, document_embeddings, sen
         else:
             query_words = transcript + overwrite_chars
             q_embedding = embedder.doc_encode(query_words)
-            print(index)
+            # print(index)
+            query.append(query_words)
             print(query_words)
             # print(q_embedding)
 
-
-
-
             cosine_scores = util.cos_sim(q_embedding, document_embeddings)
-            print(cosine_scores[0])
-
+            # print(cosine_scores[0])
 
             sentence_indices = np.argpartition(np.asarray(cosine_scores[0]), -TOP_K)[-TOP_K:].astype(int)
             # indices in reverse order i.e. increasing similarity scores
-            print(sentence_indices.astype(int))
-
-            
+            # print(sentence_indices.astype(int))
 
             for sentence_index in sentence_indices:
                 top_results.append(sentences[sentence_index])
-                print(sentences[sentence_index])
+                # print(sentences[sentence_index])
 
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
@@ -163,6 +153,7 @@ class RemembranceAgent(App):
         sentences.append(docDict[key][0])
     print("embedder loaded")
     top_results = ListProperty()
+    queryWords = []
 
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = \
         "ubicomp-367400-9ac3dff60117.json"
@@ -214,29 +205,33 @@ class RemembranceAgent(App):
                 for content in audio_generator
             )
             responses = RemembranceAgent.client.streaming_recognize(RemembranceAgent.streaming_config, requests)
+            label = Factory.MyLabel(text='%s' % "Listening...")
+            self.root.ids.target.add_widget(label)
             listen_print_loop(self.top_results, responses, RemembranceAgent.embedder,
-                              RemembranceAgent.document_embeddings, RemembranceAgent.sentences) ###UNCOMMENT FOR IMPLEMENT
+                              RemembranceAgent.document_embeddings, RemembranceAgent.sentences, self.queryWords) ###UNCOMMENT FOR IMPLEMENT
 
 
     def showFirstSelection(self):
-        print("TOP RESULTS")
-        print(self.top_results[2])
-        label = Factory.MyLabel(text='%s : %s' % (self.top_results[TOP_K - 1], "filler"))
+        # print("TOP RESULTS")
+        # print(self.top_results[2])
+        labelResult = Factory.MyLabel(text='%s : %s' % ("Processed Words: ", self.queryWords.pop()))
+        self.root.ids.target.add_widget(labelResult)
+        label = Factory.MyLabel(text='%s : %s' % ("First Result\n", self.top_results[TOP_K - 1]))
         self.root.ids.target.add_widget(label)
 
     def showSecondSelection(self):
-        print("TOP RESULTS")
-        for result in self.top_results:
-            print(result)
-        
-        print(self.top_results[1])
-        label = Factory.MyLabel(text='%s : %s' % (self.top_results[TOP_K - 2], "filler"))
+        # print("TOP RESULTS")
+        # for result in self.top_results:
+        #     print(result)
+        #
+        # print(self.top_results[1])
+        label = Factory.MyLabel(text='%s : %s' % ("Second Result\n", self.top_results[TOP_K - 2]))
         self.root.ids.target.add_widget(label)
 
     def showThirdSelection(self):
-        print("TOP RESULTS")
-        print(self.top_results[0])
-        label = Factory.MyLabel(text='%s : %s' % (self.top_results[TOP_K - 3], "filler"))
+        # print("TOP RESULTS")
+        # print(self.top_results[0])
+        label = Factory.MyLabel(text='%s : %s' % ("Third Result\n", self.top_results[TOP_K - 3]))
         self.root.ids.target.add_widget(label)
 
 
