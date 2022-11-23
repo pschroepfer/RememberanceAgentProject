@@ -13,7 +13,8 @@ def main():
             fileLoc = os.path.join('txtList/' + file)
             txtLines = []
             with open(fileLoc, encoding='utf8') as f:
-                txtLines.append(f.readlines())
+                data = f.read().replace('\n', ' ')
+                txtLines.append(data)
             fileDict.update({file: txtLines})
     pickle.dump(fileDict, open('test.pkl', 'wb'))
     return
