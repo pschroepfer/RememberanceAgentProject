@@ -1,0 +1,50 @@
+Intro
+
+
+
+Definition: Machine Learning is the study of computer algorithms that can improve automatically through experience and by the use of data
+It is seen as a part of artificial intelligence
+Machine learning algorithms build a model based on sample data, known as training data, in order to make predictions
+Machine learning algorithms are used in a wide variety of applications, such as in medicine, email filtering, speech recognition, and computer vision
+Useful when it is difficult or unfeasible to develop conventional algorithms to perform the needed tasks
+
+History
+
+
+
+The term machine learning was coined in 1959 by Arthur Samuel, an American IBMer and pioneer in the field of computer gaming and artificial intelligence.
+In 1957, Frank Rosenblatt created the perceptron based on Arthur Samuel’s work and a model of brain cells
+In the 1970s backpropagation was developed to update a network
+By 1980, expert systems had come to dominate AI, and statistics was out of favor
+Success for Geoffrey Hinton came in the mid-1980s with the reinvention of backpropagation
+
+Relation to other fields
+
+
+
+Data mining: 
+machine learning focuses on prediction, based on known properties learned from the training data
+while data mining focuses on the discovery of (previously) unknown properties in the data 
+Optimization: 
+Machine learning also has intimate ties to optimization: 
+many learning problems are formulated as minimization of some loss function on a training set of examples.
+Generalization: 
+The difference between optimization and machine learning arises from the goal of generalization: while optimization algorithms can minimize the loss on a training set, machine learning is concerned with minimizing the loss on unseen samples.
+Statistics
+statistics draws population inferences from a sample, while machine learning finds generalizable predictive patterns
+
+
+Approaches
+
+
+
+Supervised learning: 
+The computer is presented with example inputs and their desired outputs
+ the goal is to learn a general rule that maps inputs to outputs.
+Unsupervised learning: 
+No labels are given to the learning algorithm, 
+Algorithm finds structure in its input. 
+Unsupervised learning can be a goal in itself (discovering hidden patterns in data) or a means towards an end (feature learning).
+Reinforcement learning: 
+A computer program interacts with a dynamic environment in which it must perform a certain goal (such as driving a vehicle or playing a game against an opponent). 
+As it navigates its problem space, the program is provided feedback that's analogous to rewards, which it tries to maximize.

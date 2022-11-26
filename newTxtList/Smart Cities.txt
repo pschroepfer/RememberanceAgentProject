@@ -1,0 +1,30 @@
+Qualifications
+
+No exact definition - many different technologies fall under “smart city” umbrella
+Deakin and Al Waer list four factors that contribute to the definition of a smart city:
+The application of a wide range of electronic and digital technologies to communities and cities.
+The use of Information and Communications Technologies (ICT) to transform life and working environments within the region.
+The embedding of such ICT in government systems.
+The territorialisation of practices that brings ICT and people together to enhance the innovation and knowledge that they offer.
+
+Features
+
+Smart grids - Energy grids with features like circuit breakers and distribution boards integrating with home control, renewable energy storage, etc.
+Real time data collection for safety, traffic, etc.
+Bicycle/scooter sharing systems
+Providing access to government services through the use of e-access cards or mobile devices
+
+Intelligence
+
+One viewpoint is that a smart-city uses information technology to improve the “intelligence” of the city
+Orchestration intelligence: Where cities establish institutions and community-based problem solving and collaborations
+Empowerment intelligence: Cities provide open platforms, experimental facilities and smart city infrastructure in order to cluster innovation in certain districts
+Instrumentation intelligence: Where city infrastructure is made smart through real-time data collection, with analysis and predictive modelling across city districts.
+
+
+Examples
+
+Singapore - Contactless payment technologies, 7.5 million+ people using public transport, and currently developing a vehicle-free eco-smart city
+Helsinki - Transitioning entire city bus fleet to electric, and reducing emissions by implementing energy-efficiency measures
+Zurich - Smart streetlights that dim or brighten according to traffic, and sensors that collect data about traffic, the environment, and more.
+

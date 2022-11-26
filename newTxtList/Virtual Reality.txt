@@ -1,0 +1,57 @@
+History and Records
+
+Definition: Virtual reality (VR) is a simulated experience that can be similar to or completely different from the real world. 
+Applications: 
+entertainment (particularly video games),
+ education (such as medical or military training) 
+and business (such as virtual meetings)
+Term "virtual reality" coined by Jaron Lanier, who in the late 1980s designed some of the first business-grade virtual reality hardware under his firm VPL Research
+
+Concerns and challenges
+
+
+
+Health concerns: seizures; developmental issues in children; trip-and-fall and collision warnings; discomfort; repetitive stress injury; and interference with medical devices
+One in 4,000 people, or .025% may experience twitches, seizures or blackouts
+Children: children of 6–18 experience higher levels of presence and immersion than adults 19–65 years of age
+Privacy: particularly vulnerable to mass surveillance. 
+Sensors may indirectly reveal information about a user's ethnicity, personality traits, fears, emotions, interests, skills, and physical and mental health condition.
+
+Immersion Experience
+
+
+
+Display resolution: 
+Minimal Angle of Resolution (MAR) refers to the minimum distance between two display pixels
+For the general public, resolution is about 30-65 arc-seconds
+Given the viewing distance of 1m regular viewers won’t be able to perceive two pixels as separate if they are less than 0.29 mm apart
+Relationship between display and field of view
+a regular person has stereopsis of 160 degrees x 135 degrees or 1/6 of the 360-degree FOV. Immersion is quantified with the immersive index by getting the ratio of display viewing area and 1/6 of the 360-degree FOV.
+
+
+Immersion Experience
+
+
+
+Image latency and display refresh frequency
+the experience is more immersive with higher refresh rates
+higher refresh rates require a more powerful graphics processing unit
+Most displays have a refresh rate of 60Hz, which adds ~15ms of additional latency.
+The number is reduced to less than 7ms at 120Hz or 240Hz.
+
+
+Available Devices
+
+
+
+Oculus Quest ($299 128GB)
+Standalone for a good price
+Oculus Rift ($399)
+Connects to PC
+HTC Vive ($599)
+Very high resolution
+Sony Playstation VR ($299)
+Motion Control Support (used with Playstation console)
+Valve Index VR ($999)
+Revolutionary finger tracking controllers
+
