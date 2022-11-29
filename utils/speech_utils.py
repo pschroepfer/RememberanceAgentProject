@@ -122,7 +122,7 @@ def listen_print_loop(TOP_K, top_results, responses, embedder, document_embeddin
 
 def transcribe():
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = \
-    "ubicomp-367400-9ac3dff60117.json"
+    "ubicomp-367400-21c3fbefedbb.json"
     language_code = "en-US"  # a BCP-47 language tag
     client = speech.SpeechClient()
     config = speech.RecognitionConfig(
