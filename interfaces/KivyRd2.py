@@ -4,8 +4,9 @@ from kivy.factory import Factory
 from kivy.properties import ListProperty
 import pickle
 
-from utils.speech_utils import listen_print_loop, transcribe
+from utils.speech_utils import listen_print_loop, transcribe, testtrans
 from embedders.Transformer import Transformer
+import asynckivy as ak
 
 
 TOP_K = 3
@@ -50,6 +51,7 @@ class RemembranceAgent(App):
     print("loading embedder")
     embedder = Transformer('all-mpnet-base-v2')
     print("embedder loaded")
+
     print("loading docs")
     docDict = pickle.load(open('test.pkl', 'rb'))
     document_embeddings = []
@@ -67,24 +69,16 @@ class RemembranceAgent(App):
         return Builder.load_string(kivy_ui_config)
 
     def buildEmbeddings(self):
-
-        # docDict = pickle.load(open('test.pkl', 'rb'))
-        #
-        # # print(docDict)
-        # document_embeddings = []
-        # sentences = []
-        # for key in docDict:
-        #     # print(docDict[key][0])
-        #     document_embeddings.append(RemembranceAgent.embedder.doc_encode(docDict[key][0]))
-        #     sentences.append(docDict[key][0])
-
-
         label = Factory.MyLabel(text='%s' % "Listening...\n")
         self.root.ids.target.add_widget(label)
-        google_transcription_results = transcribe()
-        listen_print_loop(TOP_K, self.top_results, google_transcription_results, RemembranceAgent.embedder,
-                    RemembranceAgent.document_embeddings, RemembranceAgent.sentences, self.queryWords) ###UNCOMMENT FOR IMPLEMENT
-        
+
+        async def scraper(self):
+            await testtrans()
+            google_transcription_results = testtrans()
+            # google_transcription_results = transcribe()
+            listen_print_loop(TOP_K, self.top_results, google_transcription_results, RemembranceAgent.embedder,
+                        RemembranceAgent.document_embeddings, RemembranceAgent.sentences, self.queryWords) ###UNCOMMENT FOR IMPLEMENT
+        my_task = ak.start(scraper(self))
         labelResult = Factory.MyLabel(text='%s%s' % ("Processed Words: ", self.queryWords.pop() + "\n"))
         self.root.ids.target.add_widget(labelResult)
 

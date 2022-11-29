@@ -6,6 +6,7 @@ from google.cloud import speech
 from sentence_transformers import util
 from six.moves import queue
 
+import asynckivy as ak
 
 
 # import re
@@ -141,3 +142,32 @@ def transcribe():
         )
         responses = client.streaming_recognize(streaming_config, requests)
     return responses
+
+
+from google.cloud import speech_v1
+async def testtrans():
+
+    # Create a client
+    client = speech_v1.SpeechAsyncClient()
+
+    # Initialize request argument(s)
+    config = speech_v1.RecognitionConfig()
+    config.language_code = "language_code_value"
+
+    audio = speech_v1.RecognitionAudio()
+    audio.content = b'content_blob'
+
+    request = speech_v1.LongRunningRecognizeRequest(
+        config=config,
+        audio=audio,
+    )
+
+    # Make the request
+    operation = client.long_running_recognize(request=request)
+
+    print("Waiting for operation to complete...")
+
+    response = ak.operation.result()
+
+    # Handle the response
+    print(response)
