@@ -1,0 +1,18 @@
+Metadata-Version: 2.1
+Name: ra
+Version: 0.2.0
+Home-page: 
+Author: 
+Author-email: 
+License: BSD-3-Clause
+Keywords: computer-vision
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Operating System :: POSIX
+Classifier: Operating System :: MacOS
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >= 3.6
+Description-Content-Type: text/markdown
+
+This is the repo for our class project. The goal is to create a rememberence agent that can take in sound and output suggested documents
