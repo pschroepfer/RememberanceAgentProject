@@ -116,7 +116,6 @@ def listen_print_loop(TOP_K, top_results, responses, embedder, document_embeddin
             cosine_scores = util.cos_sim(q_embedding, document_embeddings)
             sentence_indices = np.argpartition(np.asarray(cosine_scores[0]), -TOP_K)[-TOP_K:].astype(int)
             # indices in reverse order i.e. increasing similarity scores
-
             for sentence_index in sentence_indices:
                 top_results.append(sentences[sentence_index])
             break
